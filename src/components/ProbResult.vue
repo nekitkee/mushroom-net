@@ -42,7 +42,11 @@ export default {
 @media only screen and (max-width: 600px) {
   .bar-container {
    width: 90%;
+   /*background-color: aqua;*/
+   padding-bottom: 1.5rem;
+   padding-left: 2rem;
   }
+
 }
 
 </style>

@@ -38,7 +38,7 @@ export default {
         const formData = new FormData()
         formData.append('file', this.selectedFile)
         try{
-            const response = await axios.post('http://192.168.137.39:5000/predict', formData) 
+            const response = await axios.post('https://mushroom-api.azurewebsites.net/predict', formData) 
             this.probabilities = response.data
             for (const [key, value] of Object.entries(this.probabilities)) {
                 console.log(`${key}: ${value}`);
