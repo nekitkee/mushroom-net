@@ -3,7 +3,7 @@
     <vs-navbar v-model="activeItem" class="nabarx">
       <div slot="title">
         <vs-navbar-title>
-          Mushroom-Net
+          Mushroom-scan
         </vs-navbar-title>
       </div>
 

@@ -1,12 +1,43 @@
 <template>
   <div class="MushroomWidget">
-    <h2>Upload mushroom picture and see what happens...</h2>
-    <image-preview @onselected="fileSelected"/>
-    <button v-if="selectedFile" class="download2" @click="onUpload">Upload</button>
-    <br>
-    <!--<Loader  v-if="loading" />-->
+
+    <div v-if="alertIsVisible" class="alert" >
+    <vs-alert :active="alertIsVisible" color="danger" icon="new_releases" >
+      <span> Ops...server error </span>
+    </vs-alert>
+    </div>
+  
+   
     
-    <prob-result v-if="probabilities" :data="probabilities" />
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+        <h2 v-if="!alertIsVisible">{{title}} </h2>
+        <div>
+          <image-preview @onselected="fileSelected"/>
+        </div>
+        
+        <button v-if="selectedFile" class="newbutton bluebtn" @click="onUpload">Upload</button>
+        
+        
+
+      
+    <br>
+
+     </div>
+      <div class="col-sm">
+
+
+        <loader  v-if="loaderIsVisible" class="loader"/>
+        <prob-result v-if="resultIsVisible" :data="sortedProbabilities" />
+        <div class="wikilink">
+          <a v-if="resultIsVisible" :href="wikilink">👉🏻 Read more on Wiki... 👈🏻</a>
+        </div>
+         </div>
+  </div>
+</div>
+
   </div> 
 </template>
 
@@ -26,33 +57,137 @@ export default {
     return {
         selectedFile: null,
         probabilities: null,
-        loading:false
+        sortedProbabilities: null,
+        loaderIsVisible: false,
+        resultIsVisible: false,
+        alertIsVisible: false,
+        title:"Upload mushroom picture and see what happens..."
   }
 },
+
+  computed:{
+    wikilink: function () {
+      return "https://en.wikipedia.org/wiki/" + this.title
+    }
+  },
+
   methods: {
-      fileSelected(file){
-          this.selectedFile = file
+    fileSelected(file){
+      this.selectedFile = file
+      this.title = "Let's go!"
+      this.resultIsVisible = false
     },
-    async onUpload() {
-        this.loading = true
-        const formData = new FormData()
-        formData.append('file', this.selectedFile)
-        try{
-            const response = await axios.post('https://mushroom-api.azurewebsites.net/predict', formData) 
-            this.probabilities = response.data
-            for (const [key, value] of Object.entries(this.probabilities)) {
-                console.log(`${key}: ${value}`);
-            }
-        }catch(err){
-            console.error(err)
+
+    showLoader(isVisible){
+      this.alertIsVisible = false 
+      this.loaderIsVisible = isVisible
+      this.resultIsVisible = !isVisible
+    },
+
+
+    sortResult(probObj){
+      var listProb = Object.entries(probObj)
+      listProb.sort(function(a, b) { return b[1] - a[1] })
+      var max = 0
+      listProb.forEach(element => {
+        if (element[1]>listProb[max][1]){
+           max = listProb.indexOf(element)  
         }
-        this.loading = false
+      })
+      this.title = listProb[max][0]
+      this.sortedProbabilities = Object.fromEntries(listProb);
+    },
+
+    logResult(){
+      for (const [key, value] of Object.entries(this.probabilities)) {
+        console.log(`${key}: ${value}`);
+      }
+    },
+
+    async onUpload() {
+      this.showLoader(true)
+      const formData = new FormData()
+      formData.append('file', this.selectedFile)
+      try{
+          const response = await axios.post('https://mushroom-api.azurewebsites.net/predict', formData) 
+          this.probabilities = response.data
+          this.sortResult(this.probabilities)
+          this.logResult()
+          this.showLoader(false)
+      }
+      catch(err){
+          console.error(err)
+          this.loaderIsVisible = false
+          this.alertIsVisible = true
+      }
     }
   }
 }
 </script>
 
 <style>
+.wikilink{
+  margin-bottom: 5rem ;
+} 
+
+a{
+  color: #2C3E50;
+  /*text-decoration: underline;*/
+
+}
+
+.alert{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  max-width: 18rem;
+  margin: auto;
+}
+.newbutton {
+  display: inline-block;
+  
+  padding:0.6em;
+  width: 16em;
+  
+  margin:0 0 0 0;
+  border-radius:0.22em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  text-align:center;
+  transition: all 0.2s;
+}
+
+.bluebtn{
+  color:#FFFFFF;
+  background-color: #24a0ed;
+  border:0.1em solid #FFFFFF;
+}
+
+.bluebtn:hover{
+  background-color:#2883c1;
+}
+
+
+.whitebtn{
+  color:#24a0ed;
+  background-color: #FFFFFF;
+  border:0.1em solid #FFFFFF;
+}
+
+.whitebtn:hover{
+  /*background-color:#2883c1;*/
+  border:0.1em solid #24a0ed;
+}
+
+@media all and (max-width:30em){
+.newbutton{
+  
+  margin:0.4em auto;
+}
+}
+
+
 h2 {
   margin: 40px 40px 40px;
 }
@@ -84,6 +219,12 @@ b span {
 	margin: 120px auto 0;
 }
 
+.loader {
+  display: inline-block;
+  margin-top: 3rem;
+}
+/*
+
 .download {
   display: inline-block;
   text-decoration: none;
@@ -104,7 +245,9 @@ b span {
 .download:hover {
   box-shadow: 0 2px 4px rgba(83, 100, 255, 0.45);
 }
+*/
 
+/*
 .download2 {
   display: inline-block;
   margin-right: 10px;
@@ -125,4 +268,5 @@ b span {
   color: #339DFF;
   box-shadow: 0 4px 4px rgba(83, 100, 255, 0.32);
 }
+*/
 </style>

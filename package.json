@@ -1,5 +1,5 @@
 {
-  "name": "mushroom-net",
+  "name": "mushroom-scan",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@capacitor/cli": "^2.4.7",
+    "@capacitor/core": "^2.4.7",
     "axios": "^0.21.1",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "k-progress": "^1.5.0",
     "material-icons": "^0.5.3",

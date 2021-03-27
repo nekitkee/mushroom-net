@@ -8,7 +8,7 @@
       margin="16" 
       accept="image/jpeg,image/png" 
       size="10" 
-      button-class="download"
+      button-class="newbutton whitebtn"
       :custom-strings="{
         upload: '<h1>Bummer!</h1>',
         drag: 'Drag and drop'

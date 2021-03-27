@@ -1,4 +1,4 @@
-# mushroom-net
+# mushroom-scan
 
 ## Project setup
 ```

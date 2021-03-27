@@ -1,8 +1,8 @@
 <template>
     <div class="bar-container">
     <div v-for="(item, key) in data" :key="key">
-        <span>{{key}}</span>
-        <k-progress  :percent="Math.ceil(item*100)" :color="getColor" ></k-progress>
+        <span class="mushroom-label">{{key}}</span>
+        <k-progress class="bar" :percent="Math.ceil(item*100)" :color="getColor" :active="true" bg-color="#dfe3e6"></k-progress>
     </div>
     </div>
 </template>
@@ -32,9 +32,14 @@ export default {
 </script>
 
 <style scoped>
+.bar{
+    padding-left: 1rem;
+    margin-top: 2px;
+    margin-right: -5px;
+}
+
 .bar-container{
     padding-top: 2rem;
-    padding-left: 1rem;
     width: 400px;
     margin: auto;
 }
@@ -43,10 +48,11 @@ export default {
   .bar-container {
    width: 90%;
    /*background-color: aqua;*/
+
+   padding-top: 1.2rem;
    padding-bottom: 1.5rem;
-   padding-left: 2rem;
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
   }
-
 }
-
 </style>
