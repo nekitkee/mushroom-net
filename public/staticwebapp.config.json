@@ -1,9 +1,20 @@
 {
     "routes": [
       {
+        "route": "/api",
+        "serve": "/index.html",
+        "statusCode": 200
+      },
+      {
+        "route": "/about",
+        "serve": "/index.html",
+        "statusCode": 200
+      },
+      {
         "route": "/*",
         "serve": "/index.html",
         "statusCode": 200
       }
+      
     ]
   }
