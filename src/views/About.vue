@@ -1,46 +1,30 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>About</h1>
 
-    <!--<vs-row vs-w="12">
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-lg="2" vs-sm="4" vs-xs="12" >
-        vs-lg="2" vs-sm="4" vs-xs="12"
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-lg="8" vs-sm="4" vs-xs="12">
-        vs-lg="8" vs-sm="4" vs-xs="12"
-      </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" vs-lg="2" vs-sm="4" vs-xs="12">
-        vs-lg="2" vs-sm="4" vs-xs="12"
-      </vs-col>
-    </vs-row>
-    -->
+    <about-section title="🍄 What is Mushroom-scan?" text="This application is created as part of my bachelor thesis. 
+    The goal of this work was to train a convolutional neural network for mushroom species identification
+    and create a simple user interface to allow users utilize this classifier.">
+    </about-section>
 
-  <div class="container">
-  <div class="row">
-    <div class="col">
-      1 of 22
-    </div>
-    <div class="col">
-      2 of 2
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      1 of 3
-    </div>
-    <div class="col">
-      2 of 3
-    </div>
-    <div class="col">
-      3 of 3
-    </div>
-  </div>
-</div>
-  
+    <about-section title="⚰️ Disclaimer" text="Accuracy of the resulting model is 85%. DON'T use this application as real expert system.
+      Mushroom-scan developers team is not responsible for any consequences.">
+    </about-section>
+
+    <about-section title="🛠 Version" text="V0.2 - demo.">
+    </about-section>
+
+    <about-section title="📞 Contacts" text="mr.kuznecovs.nikita@gmail.com">
+    </about-section>
 
   </div>
 </template>
 
-<style scoped>
+<script>
+import AboutSection from '../components/AboutSection.vue';
 
-</style>
+export default {
+  name: 'AboutPage',
+  components: { AboutSection}
+}
+</script>

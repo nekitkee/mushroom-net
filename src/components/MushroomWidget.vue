@@ -13,6 +13,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
+          
         <h2 v-if="!alertIsVisible">{{title}} </h2>
         <div>
           <image-preview @onselected="fileSelected"/>
@@ -61,7 +62,7 @@ export default {
         loaderIsVisible: false,
         resultIsVisible: false,
         alertIsVisible: false,
-        title:"Upload mushroom picture and see what happens..."
+        title:"Upload mushroom picture and see what happens 🔎"
   }
 },
 
@@ -74,7 +75,7 @@ export default {
   methods: {
     fileSelected(file){
       this.selectedFile = file
-      this.title = "Let's go!"
+      this.title = "Let's go! 🚀"
       this.resultIsVisible = false
     },
 
@@ -109,7 +110,7 @@ export default {
       const formData = new FormData()
       formData.append('file', this.selectedFile)
       try{
-          const response = await axios.post('https://mushroom-api.azurewebsites.net/predict', formData) 
+          const response = await axios.post('https://apim.mushroomscan.com/api/predict', formData) 
           this.probabilities = response.data
           this.sortResult(this.probabilities)
           this.logResult()

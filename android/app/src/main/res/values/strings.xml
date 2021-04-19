@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">mushroom-scan</string>
+    <string name="title_activity_main">mushroom-scan</string>
+    <string name="package_name">com.nickwynther.mushroom</string>
+    <string name="custom_url_scheme">com.nickwynther.mushroom</string>
+</resources>
